@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ssgo/goten-core/logx"
+	"github.com/ssgohq/goten-core/logx"
 )
 
 // Manager orchestrates the lifecycle of multiple services.

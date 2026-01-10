@@ -9,7 +9,7 @@ import (
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
-	"github.com/ssgo/goten-core/logx"
+	"github.com/ssgohq/goten-core/logx"
 )
 
 // Server is a standalone HTTP server for Prometheus metrics.

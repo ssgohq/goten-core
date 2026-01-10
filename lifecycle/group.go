@@ -7,7 +7,7 @@ import (
 	"sync"
 	"syscall"
 
-	"github.com/ssgo/goten-core/logx"
+	"github.com/ssgohq/goten-core/logx"
 )
 
 // ServiceGroup manages multiple services with signal handling.

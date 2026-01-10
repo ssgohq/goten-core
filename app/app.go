@@ -14,9 +14,9 @@ import (
 	"github.com/cloudwego/hertz/pkg/common/config"
 	hertztracing "github.com/hertz-contrib/obs-opentelemetry/tracing"
 
-	"github.com/ssgo/goten-core/lifecycle"
-	"github.com/ssgo/goten-core/logx"
-	"github.com/ssgo/goten-core/trace"
+	"github.com/ssgohq/goten-core/lifecycle"
+	"github.com/ssgohq/goten-core/logx"
+	"github.com/ssgohq/goten-core/trace"
 )
 
 // HookName defines standard hook names for application lifecycle.

@@ -1,4 +1,4 @@
-module github.com/ssgo/goten-core
+module github.com/ssgohq/goten-core
 
 go 1.25
 

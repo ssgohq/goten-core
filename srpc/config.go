@@ -6,7 +6,7 @@ package srpc
 import (
 	"time"
 
-	"github.com/ssgo/goten-core/trace"
+	"github.com/ssgohq/goten-core/trace"
 )
 
 // ServerConfig represents RPC server configuration.

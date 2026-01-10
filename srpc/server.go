@@ -17,8 +17,8 @@ import (
 	kitextracing "github.com/kitex-contrib/obs-opentelemetry/tracing"
 	consul "github.com/kitex-contrib/registry-consul"
 
-	"github.com/ssgo/goten-core/logx"
-	"github.com/ssgo/goten-core/srpc/middleware"
+	"github.com/ssgohq/goten-core/logx"
+	"github.com/ssgohq/goten-core/srpc/middleware"
 )
 
 // ServerBuilder helps construct Kitex server with common options.

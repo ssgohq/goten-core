@@ -7,7 +7,7 @@ import (
 	"github.com/cloudwego/kitex/pkg/endpoint"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 
-	"github.com/ssgo/goten-core/logx"
+	"github.com/ssgohq/goten-core/logx"
 )
 
 // AccessLog returns a middleware that logs RPC access information.

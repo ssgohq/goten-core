@@ -9,8 +9,8 @@ import (
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/google/uuid"
 
-	"github.com/ssgo/goten-core/logx"
-	"github.com/ssgo/goten-core/trace"
+	"github.com/ssgohq/goten-core/logx"
+	"github.com/ssgohq/goten-core/trace"
 )
 
 // RequestID returns a middleware that adds a request ID to the context and response headers.

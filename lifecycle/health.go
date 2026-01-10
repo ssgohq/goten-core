@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ssgo/goten-core/logx"
+	"github.com/ssgohq/goten-core/logx"
 )
 
 // HealthStatus represents the health status of a component.

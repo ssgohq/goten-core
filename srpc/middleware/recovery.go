@@ -8,7 +8,7 @@ import (
 
 	"github.com/cloudwego/kitex/pkg/endpoint"
 
-	"github.com/ssgo/goten-core/logx"
+	"github.com/ssgohq/goten-core/logx"
 )
 
 // Recovery returns a middleware that recovers from panics.

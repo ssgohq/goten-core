@@ -15,7 +15,7 @@ import (
 	kitextracing "github.com/kitex-contrib/obs-opentelemetry/tracing"
 	consul "github.com/kitex-contrib/registry-consul"
 
-	"github.com/ssgo/goten-core/logx"
+	"github.com/ssgohq/goten-core/logx"
 )
 
 // ClientBuilder helps construct Kitex client with common options.
