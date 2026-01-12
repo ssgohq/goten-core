@@ -14,6 +14,7 @@ import (
 
 	"github.com/cloudwego/hertz/pkg/app/server"
 	"github.com/cloudwego/hertz/pkg/common/config"
+	kitexserver "github.com/cloudwego/kitex/server"
 	hertztracing "github.com/hertz-contrib/obs-opentelemetry/tracing"
 
 	"github.com/ssgohq/goten-core/lifecycle"
@@ -33,6 +34,11 @@ const (
 	HookBeforeStop HookName = "before_stop"
 	// HookAfterStop is called after the application has stopped.
 	HookAfterStop HookName = "after_stop"
+
+	// HookMarkReady marks the service as ready for traffic.
+	HookMarkReady HookName = "mark_ready"
+	// HookMarkNotReady marks the service as not ready.
+	HookMarkNotReady HookName = "mark_not_ready"
 )
 
 // Config represents the application configuration.
@@ -122,6 +128,33 @@ func (a *App) AddHook(name HookName, fn func(ctx context.Context) error) *App {
 	a.manager.AddHook(lifecycle.Hook{
 		Name:  name,
 		Phase: lifecycle.HookPhaseStartup,
+		Fn:    fn,
+	})
+	return a
+}
+
+// AddRPC adds a Kitex RPC server to the application.
+// The server will be started and stopped as part of the application lifecycle.
+func (a *App) AddRPC(name string, server kitexserver.Server) *App {
+	adapter := lifecycle.NewKitexAdapter(name, server)
+	return a.AddService(adapter)
+}
+
+// OnStart registers a hook to run after the service starts.
+func (a *App) OnStart(name HookName, fn func(ctx context.Context) error) *App {
+	a.manager.AddHook(lifecycle.Hook{
+		Name:  name,
+		Phase: lifecycle.HookPhaseStartup,
+		Fn:    fn,
+	})
+	return a
+}
+
+// OnStop registers a hook to run before the service stops.
+func (a *App) OnStop(name HookName, fn func(ctx context.Context) error) *App {
+	a.manager.AddHook(lifecycle.Hook{
+		Name:  name,
+		Phase: lifecycle.HookPhaseShutdown,
 		Fn:    fn,
 	})
 	return a
@@ -259,7 +292,32 @@ func NewHertzServer(addr string, opts ...HertzOption) *server.Hertz {
 }
 
 // WithLogger initializes the logger with the standard logx configuration.
-// This is a convenience method that sets up logging based on environment.
-func WithLogger(_ interface{}) {
-	// No-op, use logx.Init() directly
+// Returns a cleanup function that should be deferred.
+//
+// Example:
+//
+//	func main() {
+//	    defer app.WithLogger("my-service")()
+//	    // ... rest of the application
+//	}
+func WithLogger(serviceName string) func() {
+	var cfg logx.Config
+	if os.Getenv("ENV") != "production" {
+		cfg = logx.DevelopmentConfig()
+	} else {
+		cfg = logx.ConfigFromEnv()
+	}
+	// Add service name to initial fields
+	if cfg.InitialFields == nil {
+		cfg.InitialFields = make(map[string]interface{})
+	}
+	cfg.InitialFields["service"] = serviceName
+
+	if err := logx.Init(cfg); err != nil {
+		panic("failed to initialize logger: " + err.Error())
+	}
+	return func() {
+		// Sync the logger on cleanup
+		logx.Sync()
+	}
 }
