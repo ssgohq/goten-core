@@ -7,7 +7,9 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"os/signal"
 	"sync"
+	"syscall"
 	"time"
 
 	"github.com/cloudwego/hertz/pkg/app/server"
@@ -145,7 +147,21 @@ func (a *App) Run(ctx context.Context) error {
 	}
 
 	// Start all services
-	err := a.manager.Start(ctx)
+	if err := a.manager.Start(ctx); err != nil {
+		return fmt.Errorf("failed to start services: %w", err)
+	}
+
+	// Wait for shutdown signal
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	<-quit
+
+	logx.Infow("Shutdown signal received, stopping application...")
+
+	// Stop all services
+	if err := a.manager.Stop(ctx); err != nil {
+		logx.Errorw("Error stopping services", "error", err)
+	}
 
 	// Shutdown tracing if it was enabled
 	if a.tracingEnabled && a.traceShutdown != nil {
@@ -154,10 +170,6 @@ func (a *App) Run(ctx context.Context) error {
 		if traceErr := a.traceShutdown(shutdownCtx); traceErr != nil {
 			logx.Errorw("Trace shutdown error", "error", traceErr)
 		}
-	}
-
-	if err != nil {
-		return fmt.Errorf("application error: %w", err)
 	}
 
 	logx.Infow("Application shutdown complete")
