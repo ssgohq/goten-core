@@ -4,7 +4,7 @@ go 1.25.0
 
 require (
 	github.com/cloudwego/hertz v0.10.4
-	github.com/cloudwego/kitex v0.15.4
+	github.com/cloudwego/kitex v0.16.1
 	github.com/go-sql-driver/mysql v1.9.3
 	github.com/golang-jwt/jwt/v5 v5.3.1
 	github.com/google/uuid v1.6.0
@@ -33,9 +33,9 @@ require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/cloudwego/base64x v0.1.6 // indirect
 	github.com/cloudwego/configmanager v0.2.3 // indirect
-	github.com/cloudwego/dynamicgo v0.7.1 // indirect
+	github.com/cloudwego/dynamicgo v0.8.0 // indirect
 	github.com/cloudwego/fastpb v0.0.5 // indirect
-	github.com/cloudwego/frugal v0.3.0 // indirect
+	github.com/cloudwego/frugal v0.3.1 // indirect
 	github.com/cloudwego/gopkg v0.1.8 // indirect
 	github.com/cloudwego/localsession v0.2.1 // indirect
 	github.com/cloudwego/netpoll v0.7.2 // indirect
