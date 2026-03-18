@@ -1,0 +1,148 @@
+version: "2"
+
+run:
+  timeout: 5m
+  issues-exit-code: 2
+  tests: true
+  modules-download-mode: readonly
+  allow-parallel-runners: true
+  concurrency: 4
+
+linters:
+  # Use standard group as base (includes govet, staticcheck, errcheck, ineffassign, unused)
+  default: standard
+  enable:
+    # Additional error handling
+    - errorlint # Finds code that will cause problems with Go error wrapping
+
+    # Additional bugs and code issues
+    - bodyclose # Checks whether HTTP response body is closed
+    - unconvert # Removes unnecessary type conversions
+
+    # Code style
+    - misspell # Finds commonly misspelled English words
+    - whitespace # Checks for unnecessary whitespace
+    - revive # Fast, configurable, extensible linter for Go
+
+    # Security
+    - gosec # Inspects source code for security problems
+
+    # Complexity
+    - gocyclo # Computes cyclomatic complexity of functions
+
+    # Best practices
+    - nolintlint # Reports ill-formed or insufficient nolint directives
+
+  disable:
+    - goconst # Too many false positives for switch case strings
+    - funlen # Functions are long but readable
+    - gocritic # Too opinionated for this codebase
+    - unparam # Too many false positives
+
+  settings:
+    errcheck:
+      check-type-assertions: true
+      check-blank: false
+      exclude-functions:
+        - (io.Closer).Close
+        - (net/http.ResponseWriter).Write
+        - (*os.File).Close
+        - (*net/http.Response).Body.Close
+        - fmt.Scanln
+        - fmt.Println
+        - fmt.Printf
+        - fmt.Fprintln
+        - fmt.Fprintf
+        - (*github.com/spf13/cobra.Command).Help
+        - (*github.com/spf13/cobra.Command).RegisterFlagCompletionFunc
+        - (*os.Process).Signal
+
+    govet:
+      enable-all: true
+      disable:
+        - fieldalignment # Too strict for most projects
+        - shadow # Common pattern in Go
+
+    gocyclo:
+      min-complexity: 20 # Increased threshold for complex parsers
+
+    revive:
+      rules:
+        - name: exported
+          disabled: true # Allow unexported public API documentation
+
+    gosec:
+      excludes:
+        - G104 # Audit errors not checked (covered by errcheck)
+        - G107 # Potential HTTP request with variable URL (OK for CLI tools)
+        - G110 # Potential DoS vulnerability via decompression bomb (we limit size)
+        - G115 # Integer overflow conversion (safe in our context)
+        - G204 # Subprocess launched with variable (OK for CLI tools)
+        - G301 # Directory permissions (0755 is standard)
+        - G302 # File permissions (0644 is standard)
+        - G304 # File path provided as taint input (OK for CLI tools)
+        - G305 # File traversal (we sanitize paths)
+        - G306 # WriteFile permissions (0644 is standard)
+        - G601 # Implicit memory aliasing in for loop (fixed in Go 1.22+)
+
+  exclusions:
+    generated: lax
+    presets:
+      - comments # Exclude comment-related issues
+      - std-error-handling # Exclude standard error handling patterns
+      - common-false-positives # Exclude common false positives
+    rules:
+      # Relax checks for test files
+      - path: _test\.go
+        linters:
+          - funlen
+          - gocyclo
+          - errcheck
+          - gosec
+          - goconst
+          - perfsprint
+      # Exclude template files from line length checks
+      - path: tool/internal/generator/templates/
+        linters:
+          - lll
+      - path: tool/internal/tpl/
+        linters:
+          - lll
+      # Exclude Cobra CLI patterns from error checking
+      - linters:
+          - errcheck
+        text: "Error return value of .*(MarkFlagRequired|Sync).*is not checked"
+      # Allow deprecated strings.Title (still widely used)
+      - linters:
+          - staticcheck
+        text: "SA1019.*strings.Title"
+      # Allow exec.Command without context for CLI tools
+      - linters:
+          - noctx
+        text: "os/exec.Command must not be called"
+
+formatters:
+  enable:
+    - gofumpt # Stricter Go formatter (superset of gofmt)
+    - goimports # Manages imports and formats code
+    - golines # Shortens long lines (new in v2)
+  settings:
+    gofumpt:
+      module-path: github.com/ssgohq/ssgo
+      extra-rules: true # Enable additional formatting rules
+    goimports:
+      local-prefixes:
+        - github.com/ssgohq/ssgo
+    golines:
+      max-len: 120 # Maximum line length
+      tab-len: 4 # Tab width
+
+output:
+  formats:
+    text:
+      path: stdout
+  sort-order:
+    - linter
+    - severity
+    - file
+  show-stats: true
