@@ -6,7 +6,7 @@ require (
 	github.com/cloudwego/hertz v0.10.4
 	github.com/cloudwego/kitex v0.15.4
 	github.com/go-sql-driver/mysql v1.9.3
-	github.com/golang-jwt/jwt/v5 v5.3.0
+	github.com/golang-jwt/jwt/v5 v5.3.1
 	github.com/google/uuid v1.6.0
 	github.com/hertz-contrib/obs-opentelemetry/tracing v0.4.1
 	github.com/jackc/pgx/v5 v5.8.0
