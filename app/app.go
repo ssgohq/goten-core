@@ -81,12 +81,12 @@ func (c *Config) SetDefaults() {
 
 // App represents a goten application with integrated services.
 type App struct {
-	config        Config
-	manager       *lifecycle.Manager
-	services      []lifecycle.Service
+	config         Config
+	manager        *lifecycle.Manager
+	services       []lifecycle.Service
 	tracingEnabled bool
-	traceShutdown func(context.Context) error
-	mu            sync.Mutex
+	traceShutdown  func(context.Context) error
+	mu             sync.Mutex
 }
 
 // New creates a new App with the given configuration.

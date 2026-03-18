@@ -51,11 +51,11 @@ func (c *JWTConfig) SetDefaults() {
 
 // Common errors
 var (
-	ErrMissingToken   = errors.New("missing JWT token")
-	ErrInvalidToken   = errors.New("invalid JWT token")
-	ErrTokenExpired   = errors.New("JWT token has expired")
-	ErrMissingSecret  = errors.New("missing JWT secret")
-	ErrInvalidLookup  = errors.New("invalid token lookup format")
+	ErrMissingToken  = errors.New("missing JWT token")
+	ErrInvalidToken  = errors.New("invalid JWT token")
+	ErrTokenExpired  = errors.New("JWT token has expired")
+	ErrMissingSecret = errors.New("missing JWT secret")
+	ErrInvalidLookup = errors.New("invalid token lookup format")
 )
 
 // JWT returns a JWT authentication middleware.
@@ -112,7 +112,6 @@ func JWT(cfg JWTConfig) app.HandlerFunc {
 			}
 			return []byte(cfg.Secret), nil
 		})
-
 		if err != nil {
 			if errors.Is(err, jwt.ErrTokenExpired) {
 				c.AbortWithMsg(ErrTokenExpired.Error(), 401)
