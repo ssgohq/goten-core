@@ -196,8 +196,8 @@ github.com/julienschmidt/httprouter v1.2.0/go.mod h1:SYymIcj16QtmaHHD7aYtjjsJG7V
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
 github.com/kitex-contrib/obs-opentelemetry v0.3.0 h1:STAuMGRhmtZP1zHKZVl9vj7sxMXpu7nU3IqrslShzbo=
 github.com/kitex-contrib/obs-opentelemetry v0.3.0/go.mod h1:OReZqYd24Q5djEtkRU2kMQEMq4auWtxJNk4FTKPlGHE=
-github.com/kitex-contrib/registry-consul v0.1.0 h1:G8re9ICA1kNxD/QmjwCt1HMiISwDzfnsaDeSBuIXDQ8=
-github.com/kitex-contrib/registry-consul v0.1.0/go.mod h1:h20aRkcmv0lip1nHDRWkLGzj8DNq47XpRWgsnLwLpbs=
+github.com/kitex-contrib/registry-consul v0.2.0 h1:1xTBMqCwN7uaLIlAwTCAPMO42exnPoJDFrM+hQOiNy4=
+github.com/kitex-contrib/registry-consul v0.2.0/go.mod h1:9iBT1P7g/G0ipv+HQDaVpV7jcrXbUABDhKkIbdgvheM=
 github.com/klauspost/compress v1.18.0 h1:c/Cqfb0r+Yi+JtIEq73FWXVkRonBlf0CRNYc8Zttxdo=
 github.com/klauspost/compress v1.18.0/go.mod h1:2Pp+KzxcywXVXMr50+X0Q/Lsb43OQHYWRCY2AiWywWQ=
 github.com/klauspost/cpuid/v2 v2.2.9 h1:66ze0taIn2H33fBvCkXuv9BmCwDfafmiIVpKV9kKGuY=
